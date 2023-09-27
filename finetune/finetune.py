@@ -120,6 +120,7 @@ def decide_model(args, device_map):
 )
 @click.option("--train_on_inputs", "train_on_inputs", type=bool, default=True)
 @click.option("--group_by_length", "group_by_length", type=bool, default=True)
+@click.option("--fp16", type=bool, default=True)
 def main(
     # model/data params
     base_model: str,
@@ -141,6 +142,7 @@ def main(
     # Trainer hyperparams
     train_on_inputs: bool,
     group_by_length: bool,
+    fp16: bool
 ):  
     print(
         f"Finetune parameters: \n"
@@ -160,6 +162,7 @@ def main(
         f"lora_target_modules: {lora_target_modules}\n"
         f"train_on_inputs: {train_on_inputs}\n"
         f"group_by_length: {group_by_length}\n"
+        f"fp16: {fp16}\n"
     )
     args = locals()
     namedtupler = namedtuple("args", tuple(list(args.keys())))
@@ -222,7 +225,7 @@ def main(
             warmup_steps=100,
             num_train_epochs=num_epochs,
             learning_rate=learning_rate,
-            fp16=True,
+            fp16=fp16,
             logging_steps=10,
             evaluation_strategy="steps" if val_set_size > 0 else "no",
             save_strategy="steps",
