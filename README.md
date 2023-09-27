@@ -15,13 +15,13 @@ So here's how to reproduce:
 1. Install requirements
 
 ```bash
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 2. Install PyTorch at compatible version with CUDA
 
 ```bash
-$ pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
+pip install torch==1.13.1+cu116 torchvision==0.14.1+cu116 torchaudio==0.13.1+cu116 --extra-index-url https://download.pytorch.org/whl/cu116
 ```
 
 
@@ -44,28 +44,28 @@ Reference finetune method provide by [tloen/alpaca-lora](https://github.com/tloe
 
   - `LLaMA`
     ```bash
-    $ cd finetune/
-    $ python finetune.py --base_model decapoda-research/llama-7b-hf --data_dir ../data/alpaca-en-zh.json --output_dir ../finetuned/llama-7b-hf_alpaca-en-zh --lora_target_modules '["q_proj", "v_proj"]'
+    cd finetune/
+    python finetune.py --base_model decapoda-research/llama-7b-hf --data_dir /work/twsruxy398/alpaca-7b-chinese/data/general/alpaca-en-zh.json --output_dir /work/twsruxy398/alpaca-7b-chinese/finetuned/llama-7b-hf_alpaca-en-zh --lora_target_modules '["q_proj", "v_proj"]' --fp16 False
     ```
   
   - `BLOOM`
     ```bash
-    $ cd finetune/
-    $ python finetune.py --base_model bigscience/bloomz-7b1-mt --data_dir ../data/alpaca-en-zh.json --output_dir ../finetuned/bloomz-7b1-mt_alpaca-en-zh --lora_target_modules '["query_key_value"]'
+    cd finetune/
+    python finetune.py --base_model bigscience/bloomz-7b1-mt --data_dir ./work/twsruxy398/alpaca-7b-chinese/data/general/alpaca-en-zh.json --output_dir /work/twsruxy398/alpaca-7b-chinese/finetuned/bloomz-7b1-mt_alpaca-en-zh --lora_target_modules '["query_key_value"]' --fp16 False
     ```
 
 2. Use `torchrun` for distributed training on Multi-GPUs
 
   - `LLaMA`
     ```bash
-    $ cd finetune/
-    $ torchrun --standalone --nnodes=1 --nproc_per_node=4 finetune.py --base_model decapoda-research/llama-7b-hf --data_dir ../data/alpaca-en-zh.json --output_dir ../finetuned/llama-7b-hf_alpaca-en-zh --lora_target_modules '["q_proj", "v_proj"]'
+    cd finetune/
+    torchrun --standalone --nnodes=1 --nproc_per_node=4 finetune.py --base_model decapoda-research/llama-7b-hf --data_dir /work/twsruxy398/alpaca-7b-chinese/data/general/alpaca-en-zh.json --output_dir /work/twsruxy398/alpaca-7b-chinese/finetuned/llama-7b-hf_alpaca-en-zh --lora_target_modules '["q_proj", "v_proj"]' --fp16 False
     ```
 
   - `BLOOM`
     ```bash
-    $ cd finetune/
-    $ torchrun --standalone --nnodes=1 --nproc_per_node=4 finetune.py --base_model bigscience/bloomz-7b1-mt --data_dir ../data/alpaca-en-zh.json --output_dir ../finetuned/bloomz-7b1-mt_alpaca-en-zh --lora_target_modules '["query_key_value"]'
+    cd finetune/
+    torchrun --standalone --nnodes=1 --nproc_per_node=4 finetune.py --base_model bigscience/bloomz-7b1-mt --data_dir /work/twsruxy398/alpaca-7b-chinese/data/general/alpaca-en-zh.json --output_dir /work/twsruxy398/alpaca-7b-chinese/finetuned/bloomz-7b1-mt_alpaca-en-zh --lora_target_modules '["query_key_value"]' --fp16 False
     ```
 
 ![](https://i.imgur.com/Czw3AAx.png)
